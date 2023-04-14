@@ -1,0 +1,7 @@
+export enum Perfil {
+  DISCENTE = 'DISCENTE',
+
+  ORIENTADOR = 'ORIENTADOR',
+
+  COORDENADOR = 'COORDENADOR',
+}

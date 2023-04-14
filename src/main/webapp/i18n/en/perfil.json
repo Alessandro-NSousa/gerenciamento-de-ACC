@@ -1,0 +1,10 @@
+{
+  "controleAccApp": {
+    "Perfil": {
+      "null": "",
+      "DISCENTE": "DISCENTE",
+      "ORIENTADOR": "ORIENTADOR",
+      "COORDENADOR": "COORDENADOR"
+    }
+  }
+}

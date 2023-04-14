@@ -51,6 +51,17 @@ public class CacheConfiguration {
             createCache(cm, com.ufpa.acc.domain.User.class.getName());
             createCache(cm, com.ufpa.acc.domain.Authority.class.getName());
             createCache(cm, com.ufpa.acc.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.ufpa.acc.domain.Usuario.class.getName());
+            createCache(cm, com.ufpa.acc.domain.Usuario.class.getName() + ".turmas");
+            createCache(cm, com.ufpa.acc.domain.Usuario.class.getName() + ".cursos");
+            createCache(cm, com.ufpa.acc.domain.Certificado.class.getName());
+            createCache(cm, com.ufpa.acc.domain.TurmaACC.class.getName());
+            createCache(cm, com.ufpa.acc.domain.TurmaACC.class.getName() + ".usuarios");
+            createCache(cm, com.ufpa.acc.domain.TurmaACC.class.getName() + ".cursos");
+            createCache(cm, com.ufpa.acc.domain.Curso.class.getName());
+            createCache(cm, com.ufpa.acc.domain.Curso.class.getName() + ".turmas");
+            createCache(cm, com.ufpa.acc.domain.Curso.class.getName() + ".usuarios");
+            createCache(cm, com.ufpa.acc.domain.TipoAtividade.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
