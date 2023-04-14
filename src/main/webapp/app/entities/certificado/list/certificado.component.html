@@ -1,0 +1,177 @@
+<div>
+  <h2 id="page-heading" data-cy="CertificadoHeading">
+    <span jhiTranslate="controleAccApp.certificado.home.title">Certificados</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="controleAccApp.certificado.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-certificado"
+        [routerLink]="['/certificado/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="controleAccApp.certificado.home.createLabel"> Criar novo Certificado </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="certificados?.length === 0">
+    <span jhiTranslate="controleAccApp.certificado.home.notFound">Nenhum Certificado encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="certificados && certificados.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="titulo">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.titulo">Titulo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="descricao">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dataDeEnvio">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.dataDeEnvio">Data De Envio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="observacao">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.observacao">Observacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="modalidade">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.modalidade">Modalidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="chCuprida">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.chCuprida">Ch Cuprida</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="pontuacao">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.pontuacao">Pontuacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="status">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.status">Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="caminhoDoArquivo">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.caminhoDoArquivo">Caminho Do Arquivo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="usuario.nome">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.usuario">Usuario</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="turmaAcc.nome">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.turmaAcc">Turma Acc</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="tipoAtividade.nome">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.certificado.tipoAtividade">Tipo Atividade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let certificado of certificados; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/certificado', certificado.id, 'view']">{{ certificado.id }}</a>
+          </td>
+          <td>{{ certificado.titulo }}</td>
+          <td>{{ certificado.descricao }}</td>
+          <td>{{ certificado.dataDeEnvio | formatMediumDatetime }}</td>
+          <td>{{ certificado.observacao }}</td>
+          <td jhiTranslate="{{ 'controleAccApp.Modalidade.' + certificado.modalidade }}">{{ certificado.modalidade }}</td>
+          <td>{{ certificado.chCuprida }}</td>
+          <td>{{ certificado.pontuacao }}</td>
+          <td jhiTranslate="{{ 'controleAccApp.StatusCertificado.' + certificado.status }}">{{ certificado.status }}</td>
+          <td>{{ certificado.caminhoDoArquivo }}</td>
+          <td>
+            <div *ngIf="certificado.usuario">
+              <a [routerLink]="['/usuario', certificado.usuario.id, 'view']">{{ certificado.usuario.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="certificado.turmaAcc">
+              <a [routerLink]="['/turma-acc', certificado.turmaAcc.id, 'view']">{{ certificado.turmaAcc.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="certificado.tipoAtividade">
+              <a [routerLink]="['/tipo-atividade', certificado.tipoAtividade.id, 'view']">{{ certificado.tipoAtividade.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/certificado', certificado.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/certificado', certificado.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(certificado)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div>
+  <h2 id="page-heading" data-cy="TurmaACCHeading">
+    <span jhiTranslate="controleAccApp.turmaACC.home.title">Turma ACCS</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="controleAccApp.turmaACC.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-turma-acc"
+        [routerLink]="['/turma-acc/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="controleAccApp.turmaACC.home.createLabel"> Criar novo Turma ACC </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="turmaACCS?.length === 0">
+    <span jhiTranslate="controleAccApp.turmaACC.home.notFound">Nenhum Turma ACC encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="turmaACCS && turmaACCS.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nome">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.turmaACC.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="inicio">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.turmaACC.inicio">Inicio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="termino">
+            <div class="d-flex">
+              <span jhiTranslate="controleAccApp.turmaACC.termino">Termino</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let turmaACC of turmaACCS; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/turma-acc', turmaACC.id, 'view']">{{ turmaACC.id }}</a>
+          </td>
+          <td>{{ turmaACC.nome }}</td>
+          <td>{{ turmaACC.inicio | formatMediumDate }}</td>
+          <td>{{ turmaACC.termino | formatMediumDate }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/turma-acc', turmaACC.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/turma-acc', turmaACC.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(turmaACC)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
